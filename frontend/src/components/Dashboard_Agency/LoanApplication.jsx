@@ -1,13 +1,14 @@
 import React, { useEffect, useState } from "react";
 import { Table, Button, Form, InputGroup, Spinner } from "react-bootstrap";
 import { supabase } from "../../supabaseClient"; // Ensure this is correctly imported
+import LoanDetails from "./LoanDetails";
 
 const LoanApplications = () => {
   const [search, setSearch] = useState("");
   const [applications, setApplications] = useState([]);
   const [loading, setLoading] = useState(true);
   const [updating, setUpdating] = useState(false); // New state for status update
-
+  const [selectedLoan, setSelectedLoan] = useState(null); // State to store selected loan
   // Fetch loan applications from Supabase
   const fetchApplications = async () => {
     setLoading(true);
@@ -53,6 +54,9 @@ const LoanApplications = () => {
     ));
     setUpdating(false); // Reset updating state
   };
+  if (selectedLoan) {
+    return <LoanDetails loan={selectedLoan} onBack={() => setSelectedLoan(null)} />;
+  }
 
   return (
     <div className="container-md p-5 text-white" style={{ backgroundColor: "#121212", minHeight: "100vh" }}>
@@ -109,7 +113,7 @@ const LoanApplications = () => {
                     </span>
                   </td>
                   <td>
-                    <Button variant="light" size="sm" className="me-2">View</Button>
+                    <Button variant="light" size="sm" className="me-2" onClick={() => setSelectedLoan(app)} >View</Button>
                     {app.status === null || app.status === "Pending" ? (
                       <>
                         <Button 
