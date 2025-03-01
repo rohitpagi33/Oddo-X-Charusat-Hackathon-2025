@@ -72,6 +72,20 @@ export const uploadDocuments = async (req, res) => {
   }
 };
 
+const cleanupFiles = (files) => {
+  files.forEach(file => {
+    fs.unlink(file.path, err => {
+      if (err) console.error('Error deleting file:', err);
+    });
+  });
+};
+
+// In the catch block:
+catch (error) {
+  if (req.files) cleanupFiles(req.files);
+  // ... rest of error handling
+}
+
 export const uploadMiddleware = upload.fields([
   { name: "aadharFile", maxCount: 1 },
   { name: "panFile", maxCount: 1 },

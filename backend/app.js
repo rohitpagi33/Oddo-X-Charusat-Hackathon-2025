@@ -8,6 +8,7 @@ app.use(cors());
 app.use(express.json());
 
 app.use('/api/auth', authRoutes);
+app.use('/api/loans', loanRoutes);
 
 // 📌 Use the loan routes
 app.use("/api/loans", loanRoutes);
