@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Card, Button, Form, InputGroup, Alert } from "react-bootstrap";
-import fetchCibilScore  from "./mockDatabase"; // Import fetch function
+import { supabase } from "../../supabaseClient";  // Import Supabase client
 
 export default function CIBIL() {
   const [panNumber, setPanNumber] = useState("");
@@ -8,18 +8,36 @@ export default function CIBIL() {
   const [score, setScore] = useState(null);
   const [error, setError] = useState("");
 
+  // Function to fetch CIBIL score from Supabase
+  const fetchCibilScore = async (pan, dob) => {
+    try {
+      const { data, error } = await supabase
+        .from("cibil_scores")  // Make sure your table name matches
+        .select("score")
+        .eq("pan", pan)
+        .eq("dob", dob);
+
+      if (error) throw new Error("Database error: " + error.message);
+      if (!data.length) throw new Error("CIBIL Score not found for the given PAN and DOB.");
+
+      return data[0].score;
+    } catch (err) {
+      throw new Error(err.message);
+    }
+  };
+
   const handleFetch = async (e) => {
     e.preventDefault();
     setScore(null);
     setError("");
-  
+
     try {
       const fetchedScore = await fetchCibilScore(panNumber, dob);
       setScore(fetchedScore);
     } catch (err) {
-      setError(err.toString()); // Ensure error is a string
+      setError(err.message);
     }
-  }
+  };
 
   return (
     <div className="container mt-4">

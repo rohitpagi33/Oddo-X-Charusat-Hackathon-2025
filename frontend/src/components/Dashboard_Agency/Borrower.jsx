@@ -43,6 +43,7 @@ const ApprovedLoanApplications = () => {
   if (Borrower) {
     return <BorrowerDetails borrower={Borrower} onBack={() => setBorrower(null)} />;
   }
+  
 
   return (
     <div className="container-md p-5 text-white" style={{ backgroundColor: "#121212", minHeight: "100vh" }}>
