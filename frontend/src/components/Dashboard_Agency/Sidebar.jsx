@@ -11,7 +11,7 @@ import React from "react";
 
 const Sidebar = ({ setActiveComponent }) => {
   return (
-    <div className="sidebar bg-dark text-light p-3" style={{ width: "250px", height: "100vh" }}>
+    <div className="sidebar bg-dark text-light p-3" style={{ width: "250px", height: "100vh", top:0, position : "sticky"}}>
       <h4>Dashboard</h4>
       <ul className="list-unstyled">
         <li>
