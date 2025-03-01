@@ -1,3 +1,24 @@
+// import React from "react";
+// import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+// import AuthPage from "./pages/LoginPage"; // Ensure the correct path
+
+// const Home = () => <h1 className="text-center mt-5">Welcome To MicroFin</h1>;
+
+// const App = () => {
+//   return (
+//     <Router>
+//       <Routes>
+//         <Route path="/" element={<Home />} />
+//         <Route path="/login" element={<AuthPage type="login" />} />
+//         <Route path="/register" element={<AuthPage type="register" />} />
+//       </Routes>
+//     </Router>
+//   );
+// };
+
+// export default App;
+
+
 import React from "react";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import Dashboard_Agency from "./pages/Dashboard_Agency";
@@ -9,32 +30,35 @@ import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 // import Chatbot from "./components/AI/AI";
 
+
 // Admin Components
 import Analytics from "./components/Admin/Analytics";
 import { Overview } from "./components/Admin/overview";
 import Borrowers from "./components/Admin/Borrower";
 import { LoanAnalytics } from "./components/Admin/loan-analytics";
+import { Overview } from "./components/Admin/overview";
 import { PaymentAnalytics } from "./components/Admin/payment-analytics";
 import { RecentApplications } from "./components/Admin/recent-applications";
-// import RiskAssessment from "./components/Admin/RiskAssessment";
+import RiskAssessment from "./components/Admin/RiskAssessment";
 import Settings from "./components/Dashboard/Settings";
 import Sidebar from "./components/Dashboard/Sidebar";
-// import AdminLayout from "./components/Admin/AdminLayout"; // 
+
 
 function App() {
   return (
     <Router>
       <ToastContainer />
       <Routes>
-        <Route path="/" element={<HomePage />} />
+      <Route path="/" element={<HomePage />} />
         <Route path="/register" element={<RegisterPage />} />
         <Route path="/login" element={<LoginPage />} />
-        <Route path="/dashboard_user" element={<Dashboard_User />} />
-        <Route path="/dashboard_agency" element={<Dashboard_Agency />} />
-        {/* <Route path="/AI" element={<Chatbot />} /> */}
+        <Route path="/dashbaord_user" element={<Dashboard_User />} />
+        <Route path="/dashbaord_Agency" element={<Dashboard_Agency />} />
+        {/* <Route path="/AI" element= {<Chatbot />} /> */}
 
-        {/* Admin Routes */}
-        <Route path="/admin" element={<AdminLayout />}>
+
+      {/* Admin Routes */}
+      <Route path="/admin" element={<AdminLayout />}>
           <Route path="analytics" element={<Analytics />} />
           <Route path="overview" element={<Overview />} />
           <Route path="borrowers" element={<Borrowers />} />
@@ -44,8 +68,8 @@ function App() {
           <Route path="risk-assessment" element={<RiskAssessment />} />
           <Route path="settings" element={<Settings />} />
           <Route path="*" element={<h1>Not Found</h1>} />
-          <Route path="sidebar" element={<Sidebar />} />
-        </Route>
+          <Route Sidebar="sidebar" element={<Sidebar/>} />
+      </Route>
       </Routes>
     </Router>
   );
