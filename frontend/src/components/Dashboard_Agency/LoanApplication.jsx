@@ -42,9 +42,9 @@ const LoanApplications = () => {
   };
 
   return (
-    <div className="p-4" style={{ backgroundColor: "#121212", minHeight: "100vh" }}>
-      <h2 className="text-white">Loan Applications</h2>
-      <p className="text-muted">Manage and review all loan applications</p>
+    <div className="container-md p-5 text-white" style={{ backgroundColor: "#121212", minHeight: "100vh" }}>
+      <h1 className="mb-4">Loan Applications</h1>
+      <p style={{ backgroundColor: "#121212" }}>Manage and review all loan applications</p>
 
       <InputGroup className="mb-3">
         <Form.Control
