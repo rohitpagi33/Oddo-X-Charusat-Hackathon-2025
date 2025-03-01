@@ -32,7 +32,7 @@ const LoginPage = () => {
     const data = await response.json();
     if (response.ok) {
       setMessage({ type: "success", text: "Login successful!" });
-      window.location.href = "/dashboard";
+      window.location.href = "/dashbaord_user";
     } else {
       setMessage({ type: "danger", text: data.error });
     }
