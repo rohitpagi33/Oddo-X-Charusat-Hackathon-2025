@@ -1,22 +1,3 @@
-// import React from "react";
-// import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-// import AuthPage from "./pages/LoginPage"; // Ensure the correct path
-
-// const Home = () => <h1 className="text-center mt-5">Welcome To MicroFin</h1>;
-
-// const App = () => {
-//   return (
-//     <Router>
-//       <Routes>
-//         <Route path="/" element={<Home />} />
-//         <Route path="/login" element={<AuthPage type="login" />} />
-//         <Route path="/register" element={<AuthPage type="register" />} />
-//       </Routes>
-//     </Router>
-//   );
-// };
-
-// export default App;
 import React from "react";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import Dashboard_Agency from "./pages/Dashboard_Agency";
@@ -32,11 +13,11 @@ function App() {
     <Router>
       <ToastContainer />
       <Routes>
-      <Route path="/" element={<HomePage />} />
+        <Route path="/" element={<HomePage />} />
         <Route path="/register" element={<RegisterPage />} />
         <Route path="/login" element={<LoginPage />} />
-        <Route path="/dashbaord_user" element={<Dashboard_User />} />
-        <Route path="/dashbaord_Agency" element={<Dashboard_Agency />} />
+        <Route path="/dashboard_user" element={<Dashboard_User />} />
+        <Route path="/dashboard_agency" element={<Dashboard_Agency />} />
       </Routes>
     </Router>
   );
