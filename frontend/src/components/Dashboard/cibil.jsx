@@ -1,24 +1,32 @@
 import React, { useState } from "react";
-import { Card, Button, Form, InputGroup } from "react-bootstrap";
+import { Card, Button, Form, InputGroup, Alert } from "react-bootstrap";
+import fetchCibilScore  from "./mockDatabase"; // Import fetch function
 
 export default function CIBIL() {
   const [panNumber, setPanNumber] = useState("");
   const [dob, setDob] = useState("");
   const [score, setScore] = useState(null);
+  const [error, setError] = useState("");
 
-  const handleCheckScore = (e) => {
+  const handleFetch = async (e) => {
     e.preventDefault();
-    // Simulate checking CIBIL score (Replace with actual API call)
-    const mockScore = Math.floor(Math.random() * (900 - 300 + 1)) + 300;
-    setScore(mockScore);
-  };
+    setScore(null);
+    setError("");
+  
+    try {
+      const fetchedScore = await fetchCibilScore(panNumber, dob);
+      setScore(fetchedScore);
+    } catch (err) {
+      setError(err.toString()); // Ensure error is a string
+    }
+  }
 
   return (
     <div className="container mt-4">
       <h1 className="text-center mb-4">Check Your CIBIL Score</h1>
       <Card className="p-4 shadow-sm">
         <Card.Body>
-          <Form onSubmit={handleCheckScore}>
+          <Form onSubmit={handleFetch}>
             <Form.Group className="mb-3">
               <Form.Label>PAN Number</Form.Label>
               <Form.Control
@@ -34,7 +42,8 @@ export default function CIBIL() {
               <Form.Label>Date of Birth</Form.Label>
               <InputGroup>
                 <Form.Control
-                  type="date"
+                  type="text"
+                  placeholder="YYYY-MM-DD"
                   value={dob}
                   onChange={(e) => setDob(e.target.value)}
                   required
@@ -48,6 +57,12 @@ export default function CIBIL() {
           </Form>
         </Card.Body>
       </Card>
+
+      {error && (
+        <Alert variant="danger" className="mt-4 text-center">
+          {error}
+        </Alert>
+      )}
 
       {score !== null && (
         <Card className="mt-4 p-4 text-center shadow-sm">
