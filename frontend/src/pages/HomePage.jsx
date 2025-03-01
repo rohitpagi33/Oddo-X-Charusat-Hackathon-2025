@@ -1,5 +1,8 @@
 import React, { useEffect } from 'react';
 import '../styles/HomePage.css';
+import { Link, Route } from 'react-router-dom';
+import Header from '../components/header-footer/header';
+import Footer from '../components/header-footer/footer';
 
 export default function HomePage() {
   useEffect(() => {
@@ -50,25 +53,7 @@ export default function HomePage() {
     <div>
       <div className="cursor-follower"></div>
       
-      <header>
-        <div className="container">
-          <div className="logo">
-            <h1>Micro<span>Fin</span></h1>
-          </div>
-          <nav>
-            <ul>
-              <li><a href="#how-it-works">How It Works</a></li>
-              <li><a href="#investors">For partners</a></li>
-              <li><a href="#borrowers">For Borrowers</a></li>
-              <li><a href="#about">About Us</a></li>
-            </ul>
-          </nav>
-          <div className="cta-buttons">
-            <a href="#" className="btn btn-secondary">Log In</a>
-            <a href="#" className="btn btn-primary">Sign Up</a>
-          </div>
-        </div>
-      </header>
+     <Header></Header>
   
       <section className="hero">
         <div className="container">
@@ -226,52 +211,7 @@ export default function HomePage() {
         </div>
       </section>
   
-      <footer>
-        <div className="container">
-          <div className="footer-grid">
-            <div className="footer-col">
-              <h3>MicroLend</h3>
-              <p>Connecting Partners and borrowers to create economic opportunities worldwide.</p>
-              <div className="social-links">
-                <a href="#" className="social-icon">FB</a>
-                <a href="#" className="social-icon">TW</a>
-                <a href="#" className="social-icon">IG</a>
-                <a href="#" className="social-icon">LI</a>
-              </div>
-            </div>
-            <div className="footer-col">
-              <h4>Company</h4>
-              <ul>
-                <li><a href="#">About Us</a></li>
-                <li><a href="#">Our Team</a></li>
-                <li><a href="#">Careers</a></li>
-                <li><a href="#">Press</a></li>
-              </ul>
-            </div>
-            <div className="footer-col">
-              <h4>Resources</h4>
-              <ul>
-                <li><a href="#">Blog</a></li>
-                <li><a href="#">FAQ</a></li>
-                <li><a href="#">How It Works</a></li>
-                <li><a href="#">Success Stories</a></li>
-              </ul>
-            </div>
-            <div className="footer-col">
-              <h4>Legal</h4>
-              <ul>
-                <li><a href="#">Terms of Service</a></li>
-                <li><a href="#">Privacy Policy</a></li>
-                <li><a href="#">Security</a></li>
-                <li><a href="#">Compliance</a></li>
-              </ul>
-            </div>
-          </div>
-          <div className="footer-bottom">
-            <p>&copy; 2025 MicroLend. All rights reserved.</p>
-          </div>
-        </div>
-      </footer>
+      <footer></footer>
     </div>
   );
 }

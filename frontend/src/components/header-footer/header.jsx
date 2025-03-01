@@ -1,23 +1,26 @@
-import React from "react";
-import { Link } from "react-router-dom";
-import "../../styles/header-footer/header.css";
+import React from 'react';
+import { Link } from 'react-router-dom';
 
-function header() {
+export default function Header() {
   return (
-    <header className="header">
-      <div className="logo">
-        <Link to="/">LoanApp</Link>
+    <header>
+      <div className="container">
+        <div className="logo">
+          <h1>Micro<span>Fin</span></h1>
+        </div>
+        <nav>
+          <ul>
+            <li><a href="#how-it-works">How It Works</a></li>
+            <li><a href="#investors">For partners</a></li>
+            <li><a href="#borrowers">For Borrowers</a></li>
+            <li><a href="#about">About Us</a></li>
+          </ul>
+        </nav>
+        <div className="cta-buttons">
+          <Link to={"/LoginPage"}></Link>
+          <a href="./RegisterPage.jsx" className="btn btn-primary">Sign Up</a>
+        </div>
       </div>
-      <nav>
-        <ul>
-          <li><Link to="/">Home</Link></li>
-          <li><Link to="/apply">Apply Now</Link></li>
-          <li><Link to="/contact">Contact</Link></li>
-          <li><Link to="/about">About Us</Link></li>
-        </ul>
-      </nav>
     </header>
   );
 }
-
-export default header;
