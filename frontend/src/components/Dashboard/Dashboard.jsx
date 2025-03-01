@@ -3,7 +3,6 @@ import { createClient } from "@supabase/supabase-js";
 import { supabase } from "../../supabaseClient";
 import { ArrowUpRight, Bell, CreditCard, IndianRupee, PieChart, Users } from "lucide-react";
 
-
 export default function DashboardPage() {
   const [stats, setStats] = useState([]);
   const [progressDetails, setProgressDetails] = useState([]);
@@ -15,7 +14,12 @@ export default function DashboardPage() {
   }, []);
 
   async function fetchLoanData() {
-    const { data, error } = await supabase.from("loan_applications").select("*");
+    const userId = localStorage.getItem("userId");
+    const { data, error } = await supabase
+      .from("loan_applications")
+      .select("*")
+      .eq("user_id", userId)
+      .eq("status", "Approved"); // Filter for approved loans
     if (error) {
       console.error("Error fetching loan applications:", error);
       return;
@@ -41,7 +45,11 @@ export default function DashboardPage() {
   }
 
   async function fetchRecentActivities() {
-    const { data, error } = await supabase.from("recent_activities").select("*");
+    const userId = localStorage.getItem("userId");
+    const { data, error } = await supabase
+      .from("recent_activities")
+      .select("*")
+      .eq("user_id", userId);
     if (error) {
       console.error("Error fetching recent activities:", error);
       return;
