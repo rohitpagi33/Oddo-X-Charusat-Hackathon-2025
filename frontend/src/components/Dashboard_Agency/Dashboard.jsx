@@ -14,7 +14,20 @@ const Dashboard = () => {
 
   const [recentApplications, setRecentApplications] = useState([]);
   const [chartData, setChartData] = useState({
-    labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
+    labels: [
+      "Jan",
+      "Feb",
+      "Mar",
+      "Apr",
+      "May",
+      "Jun",
+      "Jul",
+      "Aug",
+      "Sep",
+      "Oct",
+      "Nov",
+      "Dec",
+    ],
     datasets: [{ label: "Loan Amount", data: [], backgroundColor: "#fff" }],
   });
 
@@ -68,7 +81,12 @@ const Dashboard = () => {
             name: app.borrower,
             loan: `${app.loan_type} - ₹${app.loan_amount}`,
             status: app.status,
-            color: app.status === "Approved" ? "success" : app.status === "Rejected" ? "danger" : "secondary",
+            color:
+              app.status === "Approved"
+                ? "success"
+                : app.status === "Rejected"
+                ? "danger"
+                : "secondary",
           }))
         );
 
@@ -90,7 +108,20 @@ const Dashboard = () => {
         });
 
         setChartData({
-          labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
+          labels: [
+            "Jan",
+            "Feb",
+            "Mar",
+            "Apr",
+            "May",
+            "Jun",
+            "Jul",
+            "Aug",
+            "Sep",
+            "Oct",
+            "Nov",
+            "Dec",
+          ],
           datasets: [
             {
               label: "Loan Amount",
@@ -119,27 +150,53 @@ const Dashboard = () => {
   }
 
   return (
-    <div className="text-white" style={{ background: "#121212", height: "100vh", overflow: "hidden" }}>
+    <div
+      className="text-white"
+      style={{ background: "#121212", height: "100vh", overflow: "hidden" }}
+    >
       <div className="row p-4">
         {/* Statistics Cards */}
-        {[{ title: "Total Loans", value: loanStats.totalLoans, change: "+20.1%", icon: "💰" },
-          { title: "Active Borrowers", value: loanStats.activeBorrowers, change: "+180.1%", icon: "👥" },
-          { title: "Recovery Rate", value: loanStats.recoveryRate, change: "+7%", icon: "📈" },
-          { title: "Pending Applications", value: loanStats.pendingApplications, change: "+201", icon: "📑" }]
-          .map((item, idx) => (
-            <div className="col-md-3 mb-4" key={idx}>
-              <div className="card bg-dark text-white p-3 border-0 rounded-3">
-                <div className="d-flex align-items-center">
-                  <span className="fs-4 me-2">{item.icon}</span>
-                  <div>
-                    <h5 className="mb-0">{item.title}</h5>
-                    <h3 className="mb-0">{item.value}</h3>
-                    <small className="text-success">{item.change} from last month</small>
-                  </div>
+        {[
+          {
+            title: "Total Loans",
+            value: loanStats.totalLoans,
+            change: "+20.1%",
+            icon: "💰",
+          },
+          {
+            title: "Active Borrowers",
+            value: loanStats.activeBorrowers,
+            change: "+180.1%",
+            icon: "👥",
+          },
+          {
+            title: "Recovery Rate",
+            value: loanStats.recoveryRate,
+            change: "+7%",
+            icon: "📈",
+          },
+          {
+            title: "Pending Applications",
+            value: loanStats.pendingApplications,
+            change: "+201",
+            icon: "📑",
+          },
+        ].map((item, idx) => (
+          <div className="col-md-3 mb-4" key={idx}>
+            <div className="card bg-dark text-white p-3 border-0 rounded-3">
+              <div className="d-flex align-items-center">
+                <span className="fs-4 me-2">{item.icon}</span>
+                <div>
+                  <h5 className="mb-0">{item.title}</h5>
+                  <h3 className="mb-0">{item.value}</h3>
+                  <small className="text-success">
+                    {item.change} from last month
+                  </small>
                 </div>
               </div>
             </div>
-          ))}
+          </div>
+        ))}
       </div>
 
       <div className="row p-3">
@@ -156,16 +213,26 @@ const Dashboard = () => {
           <div className="card bg-dark text-white p-3 border-0 rounded-3">
             <h5>Recent Applications</h5>
             <p className="small">
-  You have {recentApplications.filter((app) => app.status === "Approved").length} approved applications.
-</p>
+              You have{" "}
+              {
+                recentApplications.filter((app) => app.status === "Approved")
+                  .length
+              }{" "}
+              approved applications.
+            </p>
 
             {recentApplications.map((app, idx) => (
-              <div key={idx} className="d-flex align-items-center justify-content-between my-2">
+              <div
+                key={idx}
+                className="d-flex align-items-center justify-content-between my-2"
+              >
                 <div>
                   <strong>{app.borrower}</strong>
                   <p className="mb-0 small text-white">{app.loan}</p>
                 </div>
-                <span className={`badge bg-${app.color} px-3 py-1`}>{app.status}</span>
+                <span className={`badge bg-${app.color} px-3 py-1`}>
+                  {app.status}
+                </span>
               </div>
             ))}
           </div>

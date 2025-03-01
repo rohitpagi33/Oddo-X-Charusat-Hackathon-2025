@@ -1,6 +1,6 @@
 import { useState } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
-import SignaturePad from "../../pages/Signature"
+import SignaturePad from "./Signature";
 
 export default function ApplyLoanPage() {
   // Form state
@@ -9,60 +9,40 @@ export default function ApplyLoanPage() {
   const [loanTenure, setLoanTenure] = useState(24);
   const [monthlyIncome, setMonthlyIncome] = useState("");
   const [employmentType, setEmploymentType] = useState("");
-  const [documents, setDocuments] = useState([]); // New state for files
   const [loading, setLoading] = useState(false);
-
-  // Handle file input change
-  const handleFileChange = (e) => {
-    setDocuments([...e.target.files]);
-  };
 
   // Handle form submission
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
 
-    // Create FormData object to handle file uploads
-    const formData = new FormData();
-    formData.append("loanType", loanType);
-    formData.append("loanAmount", loanAmount);
-    formData.append("loanTenure", loanTenure);
-    formData.append("monthlyIncome", monthlyIncome);
-    formData.append("employmentType", employmentType);
-    
-    // Append each file to FormData
-    documents.forEach((file) => {
-      formData.append("documents", file);
+    const response = await fetch(`${process.env.REACT_APP_API_URL}/api/loans/apply-loan`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        loanType,
+        loanAmount,
+        loanTenure,
+        monthlyIncome,
+        employmentType,
+      }),
     });
 
-    try {
-      const response = await fetch(`${process.env.REACT_APP_API_URL}/api/loans/apply-loan`, {
-        method: "POST",
-        body: formData, // Use FormData instead of JSON
-        // Note: Don't set Content-Type header manually when using FormData
-      });
+    const data = await response.json();
+    setLoading(false);
 
-      const data = await response.json();
-      setLoading(false);
-
-      if (!response.ok) {
-        console.error("Error submitting form:", data.error);
-        alert("Error submitting application. Please try again.");
-      } else {
-        console.log("Form submitted successfully:", data);
-        alert("Application and documents submitted successfully!");
-        // Reset form fields after submission
-        setLoanType("");
-        setLoanAmount("");
-        setLoanTenure(24);
-        setMonthlyIncome("");
-        setEmploymentType("");
-        setDocuments([]);
-      }
-    } catch (error) {
-      console.error("Submission error:", error);
+    if (!response.ok) {
+      console.error("Error submitting form:", data.error);
       alert("Error submitting application. Please try again.");
-      setLoading(false);
+    } else {
+      console.log("Form submitted successfully:", data);
+      alert("Application submitted successfully!");
+      // Reset form fields after submission
+      setLoanType("");
+      setLoanAmount("");
+      setLoanTenure(24);
+      setMonthlyIncome("");
+      setEmploymentType("");
     }
   };
 
@@ -74,7 +54,7 @@ export default function ApplyLoanPage() {
       <div className="card">
         <div className="card-header">
           <h5>Loan Application</h5>
-          <p className="text-muted">Provide your details and documents to get started.</p>
+          <p className="text-muted">Provide your details to get started.</p>
         </div>
 
         <div className="card-body">
@@ -157,37 +137,11 @@ export default function ApplyLoanPage() {
               </select>
             </div>
 
-            {/* Document Upload */}
-            <div className="mb-3">
-              <label className="form-label">Upload Documents</label>
-              <input
-                type="file"
-                className="form-control"
-                multiple
-                onChange={handleFileChange}
-                accept=".pdf,.jpg,.jpeg,.png"
-                required
-              />
-              <small className="form-text text-muted">
-                Accepted formats: PDF, JPG, PNG. Upload all required documents (ID proof, income proof, etc.)
-              </small>
-
-              <SignaturePad />
-              {documents.length > 0 && (
-                <div className="mt-2">
-                  <p>Selected files:</p>
-                  <ul>
-                    {documents.map((file, index) => (
-                      <li key={index}>{file.name}</li>
-                    ))}
-                  </ul>
-                </div>
-              )}
-            </div>
+            <SignaturePad />
 
             {/* Submit Button */}
             <button type="submit" className="btn btn-primary w-100" disabled={loading}>
-              {loading ? "Submitting..." : "Submit Application"}
+              {loading ? "Submitting..." : "Continue to Document Upload"}
             </button>
           </form>
         </div>
