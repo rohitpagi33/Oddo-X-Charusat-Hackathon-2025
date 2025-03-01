@@ -1,3 +1,4 @@
+import { FiMessageSquare } from "react-icons/fi"; 
 import { BiNotification } from "react-icons/bi"; 
 import { CiMoneyCheck1 } from "react-icons/ci"; 
 import { SlPeople } from "react-icons/sl"; 
@@ -58,7 +59,7 @@ const Sidebar = ({ setActiveComponent }) => {
             className="btn btn-dark w-100 text-start"
             onClick={() => setActiveComponent("messages")}
           >
-              Messages 
+             <FiMessageSquare />  Messages 
           </button>
         </li>
       </ul>
