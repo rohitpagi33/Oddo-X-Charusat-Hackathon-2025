@@ -18,7 +18,7 @@ const LoanApplications = () => {
   };
 
   return (
-    <div className="container mt-4">
+    <div className="p-4"  style={{ backgroundColor: "#121212", minHeight: "100vh" }}>
       <h2 className="text-white">Loan Applications</h2>
       <p className="text-muted">Manage and review all loan applications</p>
       

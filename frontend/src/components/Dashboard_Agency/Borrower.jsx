@@ -16,12 +16,14 @@ const Borrowers = () => {
   );
 
   return (
-    <div className="container mt-4">
-      <h2 className="text-white">Borrowers</h2>
-      <p className="text-muted">View and manage all registered borrowers.</p>
+    <div className="m-10 text-white" style={{ backgroundColor: "#121212", minHeight: "100vh" }}>
+      <div className="px-4">
+      <h1 className="p-1">Borrowers</h1> 
+      <p >View and manage all registered borrowers.</p>
+      </div>
 
       {/* Search Bar */}
-      <div className="mb-3">
+      <div className="px-5 my-3 ">
         <input
           type="text"
           className="form-control bg-dark text-white border-secondary"
@@ -32,8 +34,8 @@ const Borrowers = () => {
       </div>
 
       {/* Borrowers Table */}
-      <div className="table-responsive">
-        <table className="table table-dark table-hover">
+      <div className="table-responsive m-5">
+        <table className="table table-dark table-hover border-secondary">
           <thead>
             <tr>
               <th>Borrower</th>
@@ -48,15 +50,17 @@ const Borrowers = () => {
             {filteredBorrowers.map((borrower) => (
               <tr key={borrower.id}>
                 <td className="d-flex align-items-center">
-                  <div className="rounded-circle bg-secondary" style={{ width: "40px", height: "40px" }}></div>
+                  <div className="rounded-circle bg-secondary d-flex justify-content-center align-items-center text-dark fw-bold" style={{ width: "40px", height: "40px" }}>
+                    {borrower.name.charAt(0)}
+                  </div>
                   <div className="ms-2">
                     <p className="mb-0 fw-bold">{borrower.name}</p>
-                    <small className="text-muted">ID: {borrower.id}</small>
+                    <small className="text-white-50">ID: {borrower.id}</small>
                   </div>
                 </td>
                 <td>
                   <p className="mb-0">{borrower.email}</p>
-                  <small className="text-muted">{borrower.phone}</small>
+                  <small className="text-white-50">{borrower.phone}</small>
                 </td>
                 <td>{borrower.activeLoans}</td>
                 <td>{borrower.totalAmount}</td>

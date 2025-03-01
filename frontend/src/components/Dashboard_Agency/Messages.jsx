@@ -10,12 +10,12 @@ const notifications = [
 
 export default function NotificationsPage() {
   return (
-    <div className="container mt-4">
+    <div className="container-md p-5 text-white" style={{ backgroundColor: "#121212", minHeight: "100vh" }}>
       <h1 className="mb-4">Notifications</h1>
       <div className="row">
         {notifications.map((notification) => (
           <div key={notification.id} className="col-md-6 mb-3">
-            <Card className={notification.status === "unread" ? "border-primary" : ""}>
+            <Card className={`bg-dark text-white ${notification.status === "unread" ? "border-primary" : "border-secondary"}`}>
               <CardBody>
                 <p className="mb-1">{notification.message}</p>
                 <small className="text-muted">{notification.timestamp}</small>

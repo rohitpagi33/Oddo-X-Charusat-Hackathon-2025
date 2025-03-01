@@ -17,7 +17,7 @@ const Dashboard = () => {
   };
 
   return (
-    <div className="container-fluid text-white" style={{ background: "#121212", minHeight: "100vh" }}>
+    <div className="text-white" style={{ background: "#121212", height: "100vh", overflow: "hidden" }}>
       <div className="row p-4">
         {/* Statistics Cards */}
         {[
@@ -41,7 +41,7 @@ const Dashboard = () => {
         ))}
       </div>
 
-      <div className="row px-4">
+      <div className="row p-3">
         {/* Bar Chart Overview */}
         <div className="col-md-8 mb-4">
           <div className="card bg-dark text-white p-3 border-0 rounded-3">
@@ -51,7 +51,7 @@ const Dashboard = () => {
         </div>
 
         {/* Recent Applications */}
-        <div className="col-md-4">
+        <div className="col-md-4 mb-4">
           <div className="card bg-dark text-white p-3 border-0 rounded-3">
             <h5>Recent Applications</h5>
             <p className="small">You have 265 applications this month.</p>

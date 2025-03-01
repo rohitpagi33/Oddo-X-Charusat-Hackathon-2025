@@ -39,7 +39,7 @@ const AgencyDashboard = () => {
   return (
     <div className="d-flex">
       <Sidebar setActiveComponent={setActiveComponent} /> {/* Pass function to Sidebar */}
-      <div className="content-section p-4" style={{ flex: 1 }}>
+      <div className="content-section " style={{ flex: 1 }}>
         {renderContent()}
       </div>
     </div>
