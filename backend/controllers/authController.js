@@ -176,17 +176,16 @@ export const sendOTPForLogin = async (req, res) => {
   }
 };
 
-// 📌 Verify OTP for Login
 export const verifyOTPForLogin = async (req, res) => {
   const { phoneNumber, otp } = req.body;
 
   if (!phoneNumber || !otp) return res.status(400).json({ error: "Phone number and OTP are required" });
 
   try {
-    // 📌 Check if the OTP matches the one in the database
+    // 📌 Check if the user exists
     const { data: userData, error: userError } = await supabase
       .from("users")
-      .select("phone_number, otp")
+      .select("id, phone_number, otp, role") // Include role in the selection
       .eq("phone_number", phoneNumber)
       .single();
 
@@ -195,13 +194,11 @@ export const verifyOTPForLogin = async (req, res) => {
     }
 
     if (userData.otp !== otp) {
-      // 📌 OTP does not match
       return res.status(400).json({ error: "Invalid OTP" });
     }
 
     // 📌 OTP is valid, login user
-    // Optionally, you can return a session token or user data to log them in
-    res.json({ message: "Login successful" });
+    res.json({ message: "Login successful", userId: userData.id, role: userData.role });
 
   } catch (error) {
     console.error("🛑 Error verifying OTP:", error);
