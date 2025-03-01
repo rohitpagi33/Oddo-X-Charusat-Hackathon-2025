@@ -2,7 +2,7 @@ import React from 'react';
 
 export default function TestimonialsSection() {
   return (
-    <section className="testimonials">
+    <section id="success-stories" className="testimonials">
       <div className="container">
         <h2 className="section-title gradient-text">Success Stories</h2>
         <div className="testimonial-grid">
