@@ -1,6 +1,8 @@
 import { useState } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import SignaturePad from "./Signature";
+import DocumentUpload from "./Document";
+
 
 export default function ApplyLoanPage() {
   // Form state
@@ -136,6 +138,9 @@ export default function ApplyLoanPage() {
                 <option value="business">Business Owner</option>
               </select>
             </div>
+
+
+            <DocumentUpload />
 
             <SignaturePad />
 
