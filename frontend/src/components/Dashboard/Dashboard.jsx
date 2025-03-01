@@ -6,9 +6,9 @@ export default function DashboardPage() {
       {/* Header */}
       <div className="d-flex justify-content-between align-items-center mb-4">
         <h1 className="h3 fw-bold">Dashboard</h1>
-        <button className="btn btn-outline-secondary">
+        {/* <button className="btn btn-outline-secondary">
           <Bell className="h-4 w-4" />
-        </button>
+        </button> */}
       </div>
 
       {/* Stats Cards */}
