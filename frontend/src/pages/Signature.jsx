@@ -72,10 +72,10 @@ export default function SignatureComponent() {
                 />
             </div>
 
-            <button type="button" onClick={handleClear} style={{ height: "30px", width: "80px", marginRight: "10px" }}>
+            <button type="button" onClick={handleClear} style={{ height: "50px", width: "30%", marginRight: "10px" }}>
                 Clear
             </button>
-            <button type="button" onClick={handleGenerateSignature} style={{ height: "30px", width: "120px" }}>
+            <button type="button" onClick={handleGenerateSignature} style={{ height: "50px", width: "30%" }}>
                 Generate Signature
             </button>
 
