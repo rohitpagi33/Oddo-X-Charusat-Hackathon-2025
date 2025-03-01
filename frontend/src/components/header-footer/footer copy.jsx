@@ -1,0 +1,52 @@
+import React from 'react';
+
+export default function Footer() {
+  return (
+    <footer>
+      <div className="container">
+        <div className="footer-grid">
+          <div className="footer-col">
+            <h3>MicroLend</h3>
+            <p>Connecting Partners and borrowers to create economic opportunities worldwide.</p>
+            <div className="social-links">
+              <a href="#" className="social-icon">FB</a>
+              <a href="#" className="social-icon">TW</a>
+              <a href="#" className="social-icon">IG</a>
+              <a href="#" className="social-icon">LI</a>
+            </div>
+          </div>
+          <div className="footer-col">
+            <h4>Company</h4>
+            <ul>
+              <li><a href="#">About Us</a></li>
+              <li><a href="#">Our Team</a></li>
+              <li><a href="#">Careers</a></li>
+              <li><a href="#">Press</a></li>
+            </ul>
+          </div>
+          <div className="footer-col">
+            <h4>Resources</h4>
+            <ul>
+              <li><a href="#">Blog</a></li>
+              <li><a href="#">FAQ</a></li>
+              <li><a href="#">How It Works</a></li>
+              <li><a href="#">Success Stories</a></li>
+            </ul>
+          </div>
+          <div className="footer-col">
+            <h4>Legal</h4>
+            <ul>
+              <li><a href="#">Terms of Service</a></li>
+              <li><a href="#">Privacy Policy</a></li>
+              <li><a href="#">Security</a></li>
+              <li><a href="#">Compliance</a></li>
+            </ul>
+          </div>
+        </div>
+        <div className="footer-bottom">
+          <p>&copy; 2025 MicroLend. All rights reserved.</p>
+        </div>
+      </div>
+    </footer>
+  );
+}
