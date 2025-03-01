@@ -1,18 +1,28 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { supabase } from "../../supabaseClient"; // Import your Supabase client
 
 const Borrowers = () => {
   const [searchQuery, setSearchQuery] = useState("");
+  const [borrowers, setBorrowers] = useState([]); // State for storing fetched data
 
-  const borrowers = [
-    { id: "BRW001", name: "Rahul Kumar", email: "rahul.kumar@example.com", phone: "+91 98765 43210", activeLoans: 1, totalAmount: "₹50,000", cibil: 750 },
-    { id: "BRW002", name: "Priya Singh", email: "priya.singh@example.com", phone: "+91 98765 43211", activeLoans: 2, totalAmount: "₹2,50,000", cibil: 820 },
-    { id: "BRW003", name: "Amit Patel", email: "amit.patel@example.com", phone: "+91 98765 43212", activeLoans: 1, totalAmount: "₹1,50,000", cibil: 680 },
-    { id: "BRW004", name: "Sneha Gupta", email: "sneha.gupta@example.com", phone: "+91 98765 43213", activeLoans: 1, totalAmount: "₹75,000", cibil: 710 },
-    { id: "BRW005", name: "Rajesh Sharma", email: "rajesh.sharma@example.com", phone: "+91 98765 43214", activeLoans: 2, totalAmount: "₹3,00,000", cibil: 790 },
-  ];
+  useEffect(() => {
+    fetchBorrowers();
+  }, []);
 
+  // Fetch borrowers from Supabase
+  const fetchBorrowers = async () => {
+    try {
+      const { data, error } = await supabase.from("borrowers").select("*");
+      if (error) throw error;
+      setBorrowers(data);
+    } catch (error) {
+      console.error("Error fetching borrowers:", error.message);
+    }
+  };
+
+  // Filter search results
   const filteredBorrowers = borrowers.filter((borrower) =>
-    borrower.name.toLowerCase().includes(searchQuery.toLowerCase())
+    borrower.name?.toLowerCase().includes(searchQuery.toLowerCase())
   );
 
   return (
@@ -20,7 +30,7 @@ const Borrowers = () => {
       <h1 className="mb-4">Borrowers</h1>
 
       {/* Search Bar */}
-      <div className="px-5 my-3 ">
+      <div className="px-5 my-3">
         <input
           type="text"
           className="form-control bg-dark text-white border-secondary"
@@ -30,8 +40,8 @@ const Borrowers = () => {
         />
       </div>
 
-   {/* Borrowers Table */}
-   <div className="table-responsive">
+      {/* Borrowers Table */}
+      <div className="table-responsive">
         <table className="table table-dark table-hover">
           <thead>
             <tr>
@@ -44,28 +54,36 @@ const Borrowers = () => {
             </tr>
           </thead>
           <tbody>
-            {filteredBorrowers.map((borrower) => (
-              <tr key={borrower.id}>
-                <td className="d-flex align-items-center">
-                  <div className="rounded-circle bg-secondary" style={{ width: "40px", height: "40px" }}></div>
-                  <div className="ms-2">
-                    <p className="mb-0 fw-bold">{borrower.name}</p>
-                    <small className="text-white">ID: {borrower.id}</small>
-                  </div>
-                </td>
-                <td>
-                  <p className="mb-0">{borrower.email}</p>
-                  <small className="text-muted">{borrower.phone}</small>
-                </td>
-                <td>{borrower.activeLoans}</td>
-                <td>{borrower.totalAmount}</td>
-                <td>{borrower.cibil}</td>
-                <td>
-                  <button className="btn btn-outline-light btn-sm me-2">View Profile</button>
-                  <button className="btn btn-outline-light btn-sm">Loan History</button>
+            {filteredBorrowers.length > 0 ? (
+              filteredBorrowers.map((borrower) => (
+                <tr key={borrower.id}>
+                  <td className="d-flex align-items-center">
+                    <div className="rounded-circle bg-secondary" style={{ width: "40px", height: "40px" }}></div>
+                    <div className="ms-2">
+                      <p className="mb-0 fw-bold">{borrower.name}</p>
+                      <small className="text-white">ID: {borrower.id}</small>
+                    </div>
+                  </td>
+                  <td>
+                    <p className="mb-0">{borrower.email}</p>
+                    <small className="text-muted">{borrower.phone}</small>
+                  </td>
+                  <td>{borrower.activeLoans}</td>
+                  <td>{borrower.totalAmount}</td>
+                  <td>{borrower.cibil}</td>
+                  <td>
+                    <button className="btn btn-outline-light btn-sm me-2">View Profile</button>
+                    <button className="btn btn-outline-light btn-sm">Loan History</button>
+                  </td>
+                </tr>
+              ))
+            ) : (
+              <tr>
+                <td colSpan="6" className="text-center">
+                  No borrowers found
                 </td>
               </tr>
-            ))}
+            )}
           </tbody>
         </table>
       </div>

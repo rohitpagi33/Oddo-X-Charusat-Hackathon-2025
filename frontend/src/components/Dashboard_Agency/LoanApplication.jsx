@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Table, Button, Form, InputGroup, Spinner } from "react-bootstrap";
-import { supabase } from "../../supabaseClient"; // Ensure this path is correct
+import { supabase } from "../../supabaseClient"; // Ensure this is correctly imported
 
 const LoanApplications = () => {
   const [search, setSearch] = useState("");
@@ -10,7 +10,9 @@ const LoanApplications = () => {
   // Fetch loan applications from Supabase
   const fetchApplications = async () => {
     setLoading(true);
-    const { data, error } = await supabase.from("loan_application").select("*");
+    const { data, error } = await supabase
+      .from("loan_applications")
+      .select("id, loan_type, loan_amount, loan_tenure, monthly_income, employment_type, created_at, status");
 
     if (error) {
       console.error("Error fetching applications:", error);
@@ -28,28 +30,28 @@ const LoanApplications = () => {
   // Handle status update in Supabase
   const handleStatusChange = async (id, newStatus) => {
     const { error } = await supabase
-      .from("loan_application")
+      .from("loan_applications")
       .update({ status: newStatus })
       .eq("id", id);
 
     if (error) {
       console.error("Error updating status:", error);
     } else {
-      setApplications(applications.map(app => 
+      setApplications(applications.map(app =>
         app.id === id ? { ...app, status: newStatus } : app
       ));
     }
   };
 
   return (
-    <div className="p-4" style={{ backgroundColor: "#121212", minHeight: "100vh" }}>
-      <h2 className="text-white">Loan Applications</h2>
-      <p className="text-muted">Manage and review all loan applications</p>
+    <div className="container-md p-5 text-white" style={{ backgroundColor: "#121212", minHeight: "100vh" }}>
+      <h1 className="mb-4">Loan Applications</h1>
+      <p>Manage and review all loan applications</p>
 
       <InputGroup className="mb-3">
         <Form.Control
           type="text"
-          placeholder="Search applications..."
+          placeholder="Search applications by loan type or ID..."
           value={search}
           onChange={(e) => setSearch(e.target.value)}
         />
@@ -65,10 +67,11 @@ const LoanApplications = () => {
           <thead>
             <tr>
               <th>Application ID</th>
-              <th>Applicant Name</th>
               <th>Loan Type</th>
-              <th>Amount</th>
-              <th>CIBIL Score</th>
+              <th>Amount (₹)</th>
+              <th>Tenure (months)</th>
+              <th>Monthly Income (₹)</th>
+              <th>Employment Type</th>
               <th>Status</th>
               <th>Actions</th>
             </tr>
@@ -76,26 +79,27 @@ const LoanApplications = () => {
           <tbody>
             {applications
               .filter(app =>
-                app.name.toLowerCase().includes(search.toLowerCase()) ||
-                app.id.toLowerCase().includes(search.toLowerCase())
+                app.loan_type.toLowerCase().includes(search.toLowerCase()) ||
+                app.id.toString().includes(search)
               )
               .map((app) => (
                 <tr key={app.id}>
                   <td>{app.id}</td>
-                  <td>{app.name}</td>
-                  <td>{app.type}</td>
-                  <td>{app.amount}</td>
-                  <td>{app.cibil}</td>
+                  <td>{app.loan_type}</td>
+                  <td>₹{app.loan_amount}</td>
+                  <td>{app.loan_tenure} months</td>
+                  <td>₹{app.monthly_income}</td>
+                  <td>{app.employment_type}</td>
                   <td>
                     <span 
                       className={`badge bg-${app.status === "Approved" ? "success" : app.status === "Rejected" ? "danger" : "secondary"}`}
                     >
-                      {app.status}
+                      {app.status || "Pending"}
                     </span>
                   </td>
                   <td>
                     <Button variant="light" size="sm" className="me-2">View</Button>
-                    {app.status === "Pending" && (
+                    {app.status === null || app.status === "Pending" ? (
                       <>
                         <Button 
                           variant="success" 
@@ -113,6 +117,8 @@ const LoanApplications = () => {
                           Reject
                         </Button>
                       </>
+                    ) : (
+                      <span className="text-muted">Processed</span>
                     )}
                   </td>
                 </tr>
