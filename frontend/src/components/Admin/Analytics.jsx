@@ -2,6 +2,8 @@
 
 import { useState } from "react";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+// import { Card } from "../ui/card";
+
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { LoanAnalytics } from "@/components/Admin/loan-analytics";
 import { UserAnalytics } from "@/components/Admin/user-analytics";

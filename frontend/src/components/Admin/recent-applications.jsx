@@ -1,81 +1,60 @@
-import { Avatar } from "@/components/ui/avatar"
-import { AvatarFallback, AvatarImage } from "@/components/ui/avatar"
-import { Badge } from "@/components/ui/badge"
+"use client";
+
+import React, { useEffect, useState } from "react";
+import { createClient } from "@supabase/supabase-js";
+
+const supabaseUrl = "https://your-supabase-url.supabase.co";
+const supabaseKey = "your-supabase-key";
+const supabase = createClient(supabaseUrl, supabaseKey);
 
 export function RecentApplications() {
+  const [applications, setApplications] = useState([]);
+
+  useEffect(() => {
+    async function fetchData() {
+      const { data, error } = await supabase
+        .from("recent_applications")
+        .select("*");
+
+      if (error) {
+        console.error("Error fetching recent applications data:", error);
+      } else {
+        setApplications(data);
+      }
+    }
+
+    fetchData();
+  }, []);
+
   return (
     <div className="space-y-8">
-      {recentApplications.map((application) => (
+      {applications.map((application) => (
         <div key={application.id} className="flex items-center">
-          <Avatar className="h-9 w-9">
-            <AvatarImage src={application.avatar} alt="Avatar" />
-            <AvatarFallback>{application.name.charAt(0)}</AvatarFallback>
-          </Avatar>
+          <div className="avatar h-9 w-9">
+            <img src={application.avatar} alt="Avatar" className="avatar-image" />
+            <div className="avatar-fallback">{application.name.charAt(0)}</div>
+          </div>
           <div className="ml-4 space-y-1">
             <p className="text-sm font-medium leading-none">{application.name}</p>
             <p className="text-sm text-muted-foreground">
-              {application.loanType} - ₹{application.amount}
+              {application.loan_type} - ₹{application.amount}
             </p>
           </div>
           <div className="ml-auto">
-            <Badge
-              variant={
+            <span
+              className={`badge ${
                 application.status === "Pending"
-                  ? "secondary"
+                  ? "badge-secondary"
                   : application.status === "Approved"
-                    ? "success"
-                    : "destructive"
-              }
+                  ? "badge-success"
+                  : "badge-destructive"
+              }`}
             >
               {application.status}
-            </Badge>
+            </span>
           </div>
         </div>
       ))}
     </div>
-  )
+  );
 }
-
-const recentApplications = [
-  {
-    id: "1",
-    name: "Rahul Kumar",
-    avatar: "/placeholder.svg",
-    loanType: "Personal Loan",
-    amount: "50,000",
-    status: "Pending",
-  },
-  {
-    id: "2",
-    name: "Priya Singh",
-    avatar: "/placeholder.svg",
-    loanType: "Business Loan",
-    amount: "2,00,000",
-    status: "Approved",
-  },
-  {
-    id: "3",
-    name: "Amit Patel",
-    avatar: "/placeholder.svg",
-    loanType: "Education Loan",
-    amount: "1,50,000",
-    status: "Rejected",
-  },
-  {
-    id: "4",
-    name: "Sneha Gupta",
-    avatar: "/placeholder.svg",
-    loanType: "Personal Loan",
-    amount: "75,000",
-    status: "Pending",
-  },
-  {
-    id: "5",
-    name: "Rajesh Sharma",
-    avatar: "/placeholder.svg",
-    loanType: "Business Loan",
-    amount: "3,00,000",
-    status: "Approved",
-  },
-]
-

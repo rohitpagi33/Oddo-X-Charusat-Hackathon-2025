@@ -1,8 +1,6 @@
 "use client";
 
 import React from "react";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Line, LineChart, ResponsiveContainer, Tooltip, XAxis, YAxis } from "recharts";
 
 // Sample payment data for the chart
 const paymentData = [
@@ -68,30 +66,35 @@ export function PaymentAnalytics() {
   return (
     <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-7">
       {/* Payment Trends Chart */}
-      <Card className="col-span-4">
-        <CardHeader>
-          <CardTitle>Payment Trends</CardTitle>
-        </CardHeader>
-        <CardContent>
-          <ResponsiveContainer width="100%" height={350}>
-            <LineChart data={paymentData}>
-              <XAxis dataKey="month" stroke="#888888" />
-              <YAxis stroke="#888888" />
-              <Tooltip />
-              <Line type="monotone" dataKey="onTime" stroke="#82ca9d" strokeWidth={2} />
-              <Line type="monotone" dataKey="delayed" stroke="#ffc658" strokeWidth={2} />
-              <Line type="monotone" dataKey="defaulted" stroke="#ff7c43" strokeWidth={2} />
-            </LineChart>
-          </ResponsiveContainer>
-        </CardContent>
-      </Card>
+      <div className="card col-span-4">
+        <div className="card-header">
+          <h2 className="card-title">Payment Trends</h2>
+        </div>
+        <div className="card-content">
+          <div className="responsive-container" style={{ width: "100%", height: 350 }}>
+            <svg viewBox="0 0 500 350">
+              <g transform="translate(50, 20)">
+                <line x1="0" y1="300" x2="400" y2="300" stroke="#888888" />
+                <line x1="0" y1="0" x2="0" y2="300" stroke="#888888" />
+                {paymentData.map((entry, index) => (
+                  <g key={index}>
+                    <circle cx={index * 70 + 50} cy={300 - entry.onTime / 20} r="4" fill="#82ca9d" />
+                    <circle cx={index * 70 + 50} cy={300 - entry.delayed / 20} r="4" fill="#ffc658" />
+                    <circle cx={index * 70 + 50} cy={300 - entry.defaulted / 20} r="4" fill="#ff7c43" />
+                  </g>
+                ))}
+              </g>
+            </svg>
+          </div>
+        </div>
+      </div>
 
       {/* Payment Methods Distribution */}
-      <Card className="col-span-3">
-        <CardHeader>
-          <CardTitle>Payment Methods</CardTitle>
-        </CardHeader>
-        <CardContent>
+      <div className="card col-span-3">
+        <div className="card-header">
+          <h2 className="card-title">Payment Methods</h2>
+        </div>
+        <div className="card-content">
           <div className="space-y-4">
             {paymentMethods.map((method) => (
               <div key={method.name} className="flex items-center">
@@ -107,8 +110,8 @@ export function PaymentAnalytics() {
               </div>
             ))}
           </div>
-        </CardContent>
-      </Card>
+        </div>
+      </div>
     </div>
   );
 }

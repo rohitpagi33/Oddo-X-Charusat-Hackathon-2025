@@ -1,18 +1,9 @@
 "use client";
 
 import { useState } from "react";
-import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { Search } from "lucide-react";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { useToast } from "@/components/ui/use-toast";
 
 export default function Borrowers() {
   const [searchTerm, setSearchTerm] = useState("");
-  const { toast } = useToast();
 
   const filteredBorrowers = borrowers.filter(
     (borrower) =>
@@ -21,31 +12,27 @@ export default function Borrowers() {
   );
 
   const handleAction = (action, id) => {
-    toast({
-      title: `${action} Viewed`,
-      description: `${action} for borrower ${id} has been viewed.`,
-    });
+    alert(`${action} for borrower ${id} has been viewed.`);
   };
 
   return (
     <div className="grid gap-4">
-      <Card>
-        <CardHeader>
-          <CardTitle>Borrowers</CardTitle>
-          <CardDescription>View and manage all registered borrowers</CardDescription>
-        </CardHeader>
-        <CardContent>
+      <div className="card">
+        <div className="card-header">
+          <h2 className="card-title">Borrowers</h2>
+          <p className="card-description">View and manage all registered borrowers</p>
+        </div>
+        <div className="card-content">
           <div className="flex items-center gap-4 mb-4">
             <div className="flex-1">
-              <Label htmlFor="search" className="sr-only">
+              <label htmlFor="search" className="sr-only">
                 Search borrowers
-              </Label>
+              </label>
               <div className="relative">
-                <Search className="absolute left-2 top-2.5 h-4 w-4 text-muted-foreground" />
-                <Input
+                <input
                   id="search"
                   placeholder="Search borrowers..."
-                  className="pl-8"
+                  className="input pl-8"
                   value={searchTerm}
                   onChange={(e) => setSearchTerm(e.target.value)}
                 />
@@ -53,58 +40,58 @@ export default function Borrowers() {
             </div>
           </div>
           <div className="overflow-x-auto">
-            <Table>
-              <TableHeader>
-                <TableRow>
-                  <TableHead>Borrower</TableHead>
-                  <TableHead>Contact</TableHead>
-                  <TableHead>Active Loans</TableHead>
-                  <TableHead>Total Amount</TableHead>
-                  <TableHead>CIBIL Score</TableHead>
-                  <TableHead>Actions</TableHead>
-                </TableRow>
-              </TableHeader>
-              <TableBody>
+            <table className="table">
+              <thead className="table-header">
+                <tr className="table-row">
+                  <th className="table-head">Borrower</th>
+                  <th className="table-head">Contact</th>
+                  <th className="table-head">Active Loans</th>
+                  <th className="table-head">Total Amount</th>
+                  <th className="table-head">CIBIL Score</th>
+                  <th className="table-head">Actions</th>
+                </tr>
+              </thead>
+              <tbody className="table-body">
                 {filteredBorrowers.map((borrower) => (
-                  <TableRow key={borrower.id}>
-                    <TableCell>
+                  <tr key={borrower.id} className="table-row">
+                    <td className="table-cell">
                       <div className="flex items-center gap-3">
-                        <Avatar>
-                          <AvatarImage src={borrower.avatar} alt={borrower.name} />
-                          <AvatarFallback>{borrower.name.charAt(0)}</AvatarFallback>
-                        </Avatar>
+                        <div className="avatar">
+                          <img src={borrower.avatar} alt={borrower.name} className="avatar-image" />
+                          <div className="avatar-fallback">{borrower.name.charAt(0)}</div>
+                        </div>
                         <div>
                           <div className="font-medium">{borrower.name}</div>
                           <div className="text-sm text-muted-foreground">ID: {borrower.id}</div>
                         </div>
                       </div>
-                    </TableCell>
-                    <TableCell>
+                    </td>
+                    <td className="table-cell">
                       <div className="text-sm">
                         <div>{borrower.email}</div>
                         <div className="text-muted-foreground">{borrower.phone}</div>
                       </div>
-                    </TableCell>
-                    <TableCell>{borrower.activeLoans}</TableCell>
-                    <TableCell>₹{borrower.totalAmount}</TableCell>
-                    <TableCell>{borrower.cibilScore}</TableCell>
-                    <TableCell>
+                    </td>
+                    <td className="table-cell">{borrower.activeLoans}</td>
+                    <td className="table-cell">₹{borrower.totalAmount}</td>
+                    <td className="table-cell">{borrower.cibilScore}</td>
+                    <td className="table-cell">
                       <div className="flex gap-2">
-                        <Button size="sm" variant="outline" onClick={() => handleAction("Profile", borrower.id)}>
+                        <button className="button button-outline" onClick={() => handleAction("Profile", borrower.id)}>
                           View Profile
-                        </Button>
-                        <Button size="sm" variant="outline" onClick={() => handleAction("Loan History", borrower.id)}>
+                        </button>
+                        <button className="button button-outline" onClick={() => handleAction("Loan History", borrower.id)}>
                           Loan History
-                        </Button>
+                        </button>
                       </div>
-                    </TableCell>
-                  </TableRow>
+                    </td>
+                  </tr>
                 ))}
-              </TableBody>
-            </Table>
+              </tbody>
+            </table>
           </div>
-        </CardContent>
-      </Card>
+        </div>
+      </div>
     </div>
   );
 }

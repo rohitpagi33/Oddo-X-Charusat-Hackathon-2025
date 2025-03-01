@@ -10,7 +10,7 @@ import "react-toastify/dist/ReactToastify.css";
 // import Chatbot from "./components/AI/AI";
 
 // Admin Components
-import Analytics from "./components/Admin/Analytics";
+// import Analytics from "./components/Admin/Analytics";
 import { Overview } from "./components/Admin/overview";
 import Borrowers from "./components/Admin/Borrower";
 import { LoanAnalytics } from "./components/Admin/loan-analytics";
@@ -34,18 +34,18 @@ function App() {
         {/* <Route path="/AI" element={<Chatbot />} /> */}
 
         {/* Admin Routes */}
-        <Route path="/admin" element={<AdminLayout />}>
-          <Route path="analytics" element={<Analytics />} />
-          <Route path="overview" element={<Overview />} />
-          <Route path="borrowers" element={<Borrowers />} />
-          <Route path="loan-analytics" element={<LoanAnalytics />} />
-          <Route path="payment-analytics" element={<PaymentAnalytics />} />
-          <Route path="recent-applications" element={<RecentApplications />} />
-          <Route path="risk-assessment" element={<RiskAssessment />} />
-          <Route path="settings" element={<Settings />} />
-          <Route path="*" element={<h1>Not Found</h1>} />
-          <Route path="sidebar" element={<Sidebar />} />
-        </Route>
+        {/* <Route path="/admin" element={<AdminLayout />}> */}
+          {/* <Route path="analytics" element={<Analytics />} /> */}
+          <Route path="/admin/overview" element={<Overview />} />
+          <Route path="/admin/borrowers" element={<Borrowers />} />
+          <Route path="/admin/loan-analytics" element={<LoanAnalytics />} />
+          <Route path="/admin/payment-analytics" element={<PaymentAnalytics />} />
+          <Route path="/admin/recent-applications" element={<RecentApplications />} />
+          {/* <Route path="/admin/risk-assessment" element={<RiskAssessment />} /> */}
+          <Route path="/admin/settings" element={<Settings />} />
+          <Route path="/admin/*" element={<h1>Not Found</h1>} />
+          <Route path="/admin/sidebar" element={<Sidebar />} />
+        
       </Routes>
     </Router>
   );
