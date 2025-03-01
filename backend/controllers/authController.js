@@ -10,10 +10,6 @@ export const sendOTP = async (req, res) => {
   const { phoneNumber } = req.body;
   if (!phoneNumber) return res.status(400).json({ error: "Phone number is required" });
 
-  if (!phoneNumber.startsWith('+91')) {
-    phoneNumber = '+91' + phoneNumber;
-  }
-
   try {
     // 📌 Check if the user already exists
     const { data: existingUser, error: userError } = await supabase

@@ -17,8 +17,7 @@ export default function Header() {
           </ul>
         </nav>
         <div className="cta-buttons">
-          <Link to={"/LoginPage"}></Link>
-          <a href="./RegisterPage.jsx" className="btn btn-primary">Sign Up</a>
+          <a href="./register" className="btn btn-primary">Sign Up / Login</a>
         </div>
       </div>
     </header>
