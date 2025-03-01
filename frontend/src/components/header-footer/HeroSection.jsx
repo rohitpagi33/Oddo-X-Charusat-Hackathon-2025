@@ -8,8 +8,8 @@ export default function HeroSection() {
           <h1 className="gradient-text">Empowering Communities Through Microfinance</h1>
           <p>Connecting partners with borrowers to create opportunities and drive economic growth.</p>
           <div className="hero-cta">
-            <a href="#" className="btn btn-primary">Become a partner</a>
-            <a href="#" className="btn btn-secondary">Apply for a Loan</a>
+            <a href="./register" className="btn btn-primary">Become a partner</a>
+            <a href="./register" className="btn btn-secondary">Apply for a Loan</a>
           </div>
         </div>
         <div className="hero-image">

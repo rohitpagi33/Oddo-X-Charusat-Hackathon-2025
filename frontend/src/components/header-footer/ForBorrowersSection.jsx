@@ -17,7 +17,7 @@ export default function ForBorrowersSection() {
             <li>No collateral required for many loans</li>
             <li>Quick application and approval process</li>
           </ul>
-          <a href="#" className="btn btn-primary">Apply for a Loan</a>
+          <a href="./register" className="btn btn-primary">Apply for a Loan</a>
         </div>
       </div>
     </section>
