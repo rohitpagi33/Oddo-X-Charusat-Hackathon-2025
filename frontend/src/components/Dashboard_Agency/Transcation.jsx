@@ -28,8 +28,8 @@ const Transactions = () => {
   };
 
   return (
-    <div className="container mt-4">
-      <h3 className="text-white">Transactions</h3>
+    <div className="container-md p-5 text-white" style={{ backgroundColor: "#121212", minHeight: "100vh" }}>
+      <h1 className="mb-4">Transactions</h1>
       <p className="text-secondary">View and manage all loan disbursements and EMI payments</p>
 
       {/* Search & Filter */}

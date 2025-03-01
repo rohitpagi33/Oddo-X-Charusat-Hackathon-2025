@@ -1,3 +1,11 @@
+import { BiNotification } from "react-icons/bi"; 
+import { CiMoneyCheck1 } from "react-icons/ci"; 
+import { SlPeople } from "react-icons/sl"; 
+import { IoMdPeople } from "react-icons/io"; 
+import { MdOutlineDashboard } from "react-icons/md"; 
+import { TiDocumentText } from "react-icons/ti"; 
+import { IoDocumentTextOutline } from "react-icons/io"; 
+import { CiSettings } from "react-icons/ci"; 
 import React from "react";
 
 const Sidebar = ({ setActiveComponent }) => {
@@ -7,34 +15,34 @@ const Sidebar = ({ setActiveComponent }) => {
       <ul className="list-unstyled">
         <li>
           <button
-            className="btn btn-dark w-100 text-start"
+            className="btn btn-dark w-200 text-start"
             onClick={() => setActiveComponent("dashboard")}
           >
-            📊 Dashboard
-          </button>
+            <MdOutlineDashboard />  Dashboard
+            </button>
         </li>
         <li>
           <button
             className="btn btn-dark w-100 text-start"
             onClick={() => setActiveComponent("loan-application")}
           >
-            Loan Application
+           <TiDocumentText />  Loan Application
           </button>
         </li>
-        <li>
+        {/* <li>
           <button
             className="btn btn-dark w-100 text-start"
             onClick={() => setActiveComponent("settings")}
           >
-            ⚙️ Settings
+            <CiSettings/>  Settings
           </button>
-        </li>
+        </li> */}
         <li>
           <button
             className="btn btn-dark w-100 text-start"
             onClick={() => setActiveComponent("borrower")}
           >
-            Borrower
+            <SlPeople />  Borrower
           </button>
         </li>
         <li>
@@ -42,7 +50,7 @@ const Sidebar = ({ setActiveComponent }) => {
             className="btn btn-dark w-100 text-start"
             onClick={() => setActiveComponent("transaction")}
           >
-            Transaction
+            <CiMoneyCheck1 />  Transaction
           </button>
         </li>
         <li>
@@ -50,7 +58,7 @@ const Sidebar = ({ setActiveComponent }) => {
             className="btn btn-dark w-100 text-start"
             onClick={() => setActiveComponent("messages")}
           >
-            Messages 
+              Messages 
           </button>
         </li>
       </ul>
