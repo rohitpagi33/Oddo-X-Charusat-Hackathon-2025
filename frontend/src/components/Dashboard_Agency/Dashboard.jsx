@@ -65,7 +65,7 @@ const Dashboard = () => {
 
         setRecentApplications(
           applications.map((app) => ({
-            name: app.borrower_name,
+            name: app.borrower,
             loan: `${app.loan_type} - ₹${app.loan_amount}`,
             status: app.status,
             color: app.status === "Approved" ? "success" : app.status === "Rejected" ? "danger" : "secondary",
@@ -155,12 +155,15 @@ const Dashboard = () => {
         <div className="col-md-4 mb-4">
           <div className="card bg-dark text-white p-3 border-0 rounded-3">
             <h5>Recent Applications</h5>
-            <p className="small">You have {recentApplications.length} applications this month.</p>
+            <p className="small">
+  You have {recentApplications.filter((app) => app.status === "Approved").length} approved applications.
+</p>
+
             {recentApplications.map((app, idx) => (
               <div key={idx} className="d-flex align-items-center justify-content-between my-2">
                 <div>
-                  <strong>{app.name}</strong>
-                  <p className="mb-0 small text-muted">{app.loan}</p>
+                  <strong>{app.borrower}</strong>
+                  <p className="mb-0 small text-white">{app.loan}</p>
                 </div>
                 <span className={`badge bg-${app.color} px-3 py-1`}>{app.status}</span>
               </div>
