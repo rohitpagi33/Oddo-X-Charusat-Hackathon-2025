@@ -6,6 +6,7 @@ const LoanApplications = () => {
   const [search, setSearch] = useState("");
   const [applications, setApplications] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [updating, setUpdating] = useState(false); // New state for status update
 
   // Fetch loan applications from Supabase
   const fetchApplications = async () => {
@@ -29,6 +30,10 @@ const LoanApplications = () => {
 
   // Handle status update in Supabase
   const handleStatusChange = async (id, newStatus) => {
+    console.log(`Updating status for application ID ${id} to ${newStatus}`);
+    setUpdating(true); // Set updating state to true
+
+    // Update status in the Supabase database first
     const { error } = await supabase
       .from("loan_applications")
       .update({ status: newStatus })
@@ -36,11 +41,17 @@ const LoanApplications = () => {
 
     if (error) {
       console.error("Error updating status:", error);
-    } else {
-      setApplications(applications.map(app =>
-        app.id === id ? { ...app, status: newStatus } : app
-      ));
+      setUpdating(false); // Reset updating state
+      return;
     }
+
+    console.log(`Successfully updated status for application ID ${id} to ${newStatus}`);
+
+    // Update the status locally after a successful database update
+    setApplications(applications.map(app =>
+      app.id === id ? { ...app, status: newStatus } : app
+    ));
+    setUpdating(false); // Reset updating state
   };
 
   return (
@@ -106,6 +117,7 @@ const LoanApplications = () => {
                           size="sm" 
                           className="me-2" 
                           onClick={() => handleStatusChange(app.id, "Approved")}
+                          disabled={updating} // Disable button while updating
                         >
                           Approve
                         </Button>
@@ -113,6 +125,7 @@ const LoanApplications = () => {
                           variant="danger" 
                           size="sm" 
                           onClick={() => handleStatusChange(app.id, "Rejected")}
+                          disabled={updating} // Disable button while updating
                         >
                           Reject
                         </Button>
