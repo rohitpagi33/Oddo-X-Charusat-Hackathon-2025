@@ -8,6 +8,20 @@ const LoginPage = () => {
   const [message, setMessage] = useState(null);
   const [step, setStep] = useState(1);
 
+    const userId = localStorage.getItem("userId");
+    const role = localStorage.getItem("role");
+
+    if (userId && role) {
+      // Redirect to the appropriate dashboard based on the user's role
+      if (role === "admin") {
+        window.location.href = "/dashboard_admin";
+      } else if (role === "user") {
+        window.location.href = "/dashboard_user";
+      } else if (role === "agency") {
+        window.location.href = "/dashboard_agency";
+      }
+    }
+
   const handleSendOTP = async () => {
     const response = await fetch(`${process.env.REACT_APP_API_URL}/api/auth/send-otp-login`, {
       method: "POST",
@@ -31,8 +45,18 @@ const LoginPage = () => {
     });
     const data = await response.json();
     if (response.ok) {
+      localStorage.setItem("userId", data.userId);
+      localStorage.setItem("role", data.role);
       setMessage({ type: "success", text: "Login successful!" });
-      window.location.href = "/dashbaord_user";
+
+      // Redirect based on role
+      if (data.role === "admin") {
+        window.location.href = "/dashboard_admin";
+      } else if (data.role === "user") {
+        window.location.href = "/dashboard_user";
+      } else if (data.role === "agency") {
+        window.location.href = "/dashboard_agency";
+      }
     } else {
       setMessage({ type: "danger", text: data.error });
     }
