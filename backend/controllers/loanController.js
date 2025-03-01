@@ -71,7 +71,7 @@ export const uploadDocuments = async (req, res) => {
     return res.status(500).json({ error: "Internal server error" });
   }
 };
-
+try{
 const cleanupFiles = (files) => {
   files.forEach(file => {
     fs.unlink(file.path, err => {
@@ -79,7 +79,7 @@ const cleanupFiles = (files) => {
     });
   });
 };
-
+}
 // In the catch block:
 catch (error) {
   if (req.files) cleanupFiles(req.files);
