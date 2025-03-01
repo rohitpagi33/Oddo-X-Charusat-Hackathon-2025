@@ -58,7 +58,7 @@ const Sidebar = ({ setActiveComponent }) => {
             className="btn btn-dark w-100 text-start"
             onClick={() => setActiveComponent("messages")}
           >
-             <FiMessageSquare />  Messages 
+             <FiMessageSquare />  Notifications 
           </button>
         </li>
       </ul>
