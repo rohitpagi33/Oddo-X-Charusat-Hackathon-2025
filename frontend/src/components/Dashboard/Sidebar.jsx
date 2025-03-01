@@ -34,7 +34,7 @@ const Sidebar = ({ setActiveComponent }) => {
             className="btn btn-dark w-100 text-start"
             onClick={() => setActiveComponent("emi")}
           >
-            ⚙️ EMI Schedual
+            EMI Schedual
           </button>
         </li>
         <li>
@@ -42,7 +42,15 @@ const Sidebar = ({ setActiveComponent }) => {
             className="btn btn-dark w-100 text-start"
             onClick={() => setActiveComponent("cibil")}
           >
-            ⚙️ CIBIL Score
+            CIBIL Score
+          </button>
+        </li>
+        <li>
+          <button
+            className="btn btn-dark w-100 text-start"
+            onClick={() => setActiveComponent("messages")}
+          >
+            Messages 
           </button>
         </li>
       </ul>

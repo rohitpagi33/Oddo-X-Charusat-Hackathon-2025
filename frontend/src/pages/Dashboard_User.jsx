@@ -4,6 +4,7 @@ import Sidebar from "../components/Dashboard/Sidebar.jsx";
 import Dashboard from "../components/Dashboard/Dashboard.jsx"; // Example component
 import Settings from "../components/Dashboard/Settings.jsx"; // Example component
 import CIBIL from "../components/Dashboard/cibil.jsx"; // Example component
+import Messages from "../components/Dashboard/Messages.jsx"; // Example component
 import EMI_Schedual from "../components/Dashboard/EMI_schedules.jsx"; // Example component
 import Apply_loan from "../components/Dashboard/Apply_loan.jsx"; // Example component
 import { useState } from "react";
@@ -22,6 +23,8 @@ const UserDashboard = () => {
         return <CIBIL />;
       case "emi":
         return <EMI_Schedual />;
+      case "messages":
+          return <Messages />;
       case "settings":
         return <Settings />;
       default:
