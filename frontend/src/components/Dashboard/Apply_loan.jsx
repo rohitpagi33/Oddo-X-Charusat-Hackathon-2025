@@ -1,5 +1,6 @@
 import { useState } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
+import SignaturePad from "../../pages/Signature"
 
 export default function ApplyLoanPage() {
   // Form state
@@ -170,6 +171,8 @@ export default function ApplyLoanPage() {
               <small className="form-text text-muted">
                 Accepted formats: PDF, JPG, PNG. Upload all required documents (ID proof, income proof, etc.)
               </small>
+
+              <SignaturePad />
               {documents.length > 0 && (
                 <div className="mt-2">
                   <p>Selected files:</p>
