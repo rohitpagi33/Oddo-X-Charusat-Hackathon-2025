@@ -89,7 +89,7 @@ export default function DocumentUpload() {
             <button
                 type="button"
                 onClick={handleClear}
-                style={{ height: "50px", width: "20%", marginRight: "10%" }}
+                style={{ height: "50px", width: "30%",marginRight:"10px"}}
                 disabled={isUploading}
             >
                 Clear
@@ -97,7 +97,7 @@ export default function DocumentUpload() {
             <button
                 type="button"
                 onClick={handleUploadDocument}
-                style={{ height: "30px", width: "120px" }}
+                style={{ height: "50px", width: "30%" }}
                 disabled={isUploading}
             >
                 {isUploading ? "Uploading..." : "Upload Document"}

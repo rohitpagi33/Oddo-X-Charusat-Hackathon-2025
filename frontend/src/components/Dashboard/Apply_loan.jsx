@@ -3,7 +3,6 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import SignaturePad from "./Signature";
 import DocumentUpload from "./Document";
 
-
 export default function ApplyLoanPage() {
   // Form state
   const [loanType, setLoanType] = useState("");
@@ -18,10 +17,20 @@ export default function ApplyLoanPage() {
     e.preventDefault();
     setLoading(true);
 
+    // Get user_id from localStorage
+    const userId = localStorage.getItem("userId");
+
+    if (!userId) {
+      alert("User not logged in. Please log in first.");
+      setLoading(false);
+      return;
+    }
+
     const response = await fetch(`${process.env.REACT_APP_API_URL}/api/loans/apply-loan`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
+        userId, // Storing user_id in Supabase
         loanType,
         loanAmount,
         loanTenure,
@@ -36,9 +45,12 @@ export default function ApplyLoanPage() {
     if (!response.ok) {
       console.error("Error submitting form:", data.error);
       alert("Error submitting application. Please try again.");
+      window.location.reload();
     } else {
       console.log("Form submitted successfully:", data);
       alert("Application submitted successfully!");
+      window.location.href = "http://localhost:3000/dashboard_user";
+      
       // Reset form fields after submission
       setLoanType("");
       setLoanAmount("");
@@ -139,9 +151,7 @@ export default function ApplyLoanPage() {
               </select>
             </div>
 
-
             <DocumentUpload />
-
             <SignaturePad />
 
             {/* Submit Button */}
