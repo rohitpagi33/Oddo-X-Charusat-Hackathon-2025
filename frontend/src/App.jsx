@@ -33,6 +33,7 @@ function App() {
         <Route path="/register" element={<RegisterPage />} />
         <Route path="/login" element={<LoginPage />} />
         <Route path="/dashbaord_user" element={<Dashboard_User />} />
+        <Route path="/dashbaord_Agency" element={<Dashboard_Agency />} />
       </Routes>
     </Router>
   );
