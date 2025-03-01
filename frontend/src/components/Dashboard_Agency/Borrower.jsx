@@ -1,94 +1,108 @@
 import { useEffect, useState } from "react";
-import { supabase } from "../../supabaseClient"; // Import your Supabase client
+import { supabase } from "../../supabaseClient";
+import { Spinner } from 'react-bootstrap';
+import { Button, Table } from "react-bootstrap";
+import BorrowerDetails from "./BorrowerDetails";
 
-const Borrowers = () => {
-  const [searchQuery, setSearchQuery] = useState("");
-  const [borrowers, setBorrowers] = useState([]); // State for storing fetched data
+const ApprovedLoanApplications = () => {
+  const [applications, setApplications] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [Borrower, setBorrower] = useState(null); // State to store selected loan
 
-  useEffect(() => {
-    fetchBorrowers();
-  }, []);
-
-  // Fetch borrowers from Supabase
-  const fetchBorrowers = async () => {
+  // Fetch approved loan applications
+  const fetchApprovedApplications = async () => {
+    setLoading(true);
     try {
-      const { data, error } = await supabase.from("borrowers").select("*");
+      // Get loan applications where status = 'Approved'
+      const { data, error } = await supabase
+        .from("loan_applications")
+        .select(`
+          id,
+          loan_amount,
+          monthly_income,
+          loan_tenure,
+          status,
+          borrower
+        `)
+        .eq("status", "Approved"); // Filter by approved status
+
       if (error) throw error;
-      setBorrowers(data);
+      setApplications(data); // Set the fetched approved applications
     } catch (error) {
-      console.error("Error fetching borrowers:", error.message);
+      console.error("Error fetching approved loan applications:", error.message);
+    } finally {
+      setLoading(false);
     }
   };
 
-  // Filter search results
-  const filteredBorrowers = borrowers.filter((borrower) =>
-    borrower.name?.toLowerCase().includes(searchQuery.toLowerCase())
-  );
+  // Fetch applications on component mount
+  useEffect(() => {
+    fetchApprovedApplications();
+  }, []);
+
+  if (Borrower) {
+    return <BorrowerDetails borrower={Borrower} onBack={() => setBorrower(null)} />;
+  }
 
   return (
     <div className="container-md p-5 text-white" style={{ backgroundColor: "#121212", minHeight: "100vh" }}>
       <h1 className="mb-4">Borrowers</h1>
 
-      {/* Search Bar */}
-      <div className="px-5 my-3">
-        <input
-          type="text"
-          className="form-control bg-dark text-white border-secondary"
-          placeholder="Search borrowers..."
-          value={searchQuery}
-          onChange={(e) => setSearchQuery(e.target.value)}
-        />
-      </div>
-
-      {/* Borrowers Table */}
-      <div className="table-responsive">
-        <table className="table table-dark table-hover">
-          <thead>
-            <tr>
-              <th>Borrower</th>
-              <th>Contact</th>
-              <th>Active Loans</th>
-              <th>Total Amount</th>
-              <th>CIBIL Score</th>
-              <th>Actions</th>
-            </tr>
-          </thead>
-          <tbody>
-            {filteredBorrowers.length > 0 ? (
-              filteredBorrowers.map((borrower) => (
-                <tr key={borrower.id}>
-                  <td className="d-flex align-items-center">
-                    <div className="rounded-circle bg-secondary" style={{ width: "40px", height: "40px" }}></div>
-                    <div className="ms-2">
-                      <p className="mb-0 fw-bold">{borrower.name}</p>
-                      <small className="text-white">ID: {borrower.id}</small>
-                    </div>
-                  </td>
-                  <td>
-                    <p className="mb-0">{borrower.email}</p>
-                    <small className="text-muted">{borrower.phone}</small>
-                  </td>
-                  <td>{borrower.activeLoans}</td>
-                  <td>{borrower.totalAmount}</td>
-                  <td>{borrower.cibil}</td>
-                  <td>
-                    <button className="btn btn-outline-light btn-sm me-2">View Profile</button>
-                    <button className="btn btn-outline-light btn-sm">Loan History</button>
-                  </td>
+      {loading ? (
+        <div className="text-center text-white">
+          <Spinner animation="border" />
+          <p>Loading applications...</p>
+        </div>
+      ) : (
+        <div>
+          {applications.length === 0 ? (
+            <p>No approved loan applications found.</p>
+          ) : (
+            <table className="table table-dark table-hover">
+              <thead>
+                <tr>
+                  <th>Application ID</th>
+                  <th>Amount</th>
+                  <th>Monthly Income</th>
+                  <th>Loan Tenure</th>
+                  <th>Borrower</th>
+                  <th>view profile</th>
                 </tr>
-              ))
-            ) : (
-              <tr>
-                <td colSpan="6" className="text-center">
-                  No borrowers found
-                </td>
-              </tr>
-            )}
-          </tbody>
-        </table>
-      </div>
+              </thead>
+              <tbody>
+                {applications.map((application) => (
+                  <tr key={application.id}>
+                    <td>{application.id}</td>
+                    <td>
+                      <a rel="noopener noreferrer">
+                      {application.loan_amount}
+                      </a>
+                    </td>
+                    <td>
+                      <a rel="noopener noreferrer">
+                      {application.monthly_income}
+                      </a>
+                    </td>
+                    <td>
+                      <a rel="noopener noreferrer">
+                      {application.loan_tenure}
+                      </a>
+                    </td>
+                    <td>{application.borrower}</td>
+                    <td>
+                    <a rel="noopener noreferrer">
+                    <Button variant="light" size="sm" className="me-2" onClick={() => setBorrower(application)} >View</Button>
+                      </a>
+                      </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          )}
+        </div>
+      )}
     </div>
   );
 };
 
-export default Borrowers;
+export default ApprovedLoanApplications;
