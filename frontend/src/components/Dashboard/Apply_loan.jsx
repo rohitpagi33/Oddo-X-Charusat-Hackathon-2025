@@ -1,5 +1,4 @@
 import { useState } from "react";
-import { supabase } from "../../supabaseClient.jsx";
 import "bootstrap/dist/css/bootstrap.min.css";
 
 export default function ApplyLoanPage() {
@@ -16,20 +15,23 @@ export default function ApplyLoanPage() {
     e.preventDefault();
     setLoading(true);
 
-    const { data, error } = await supabase.from("loan_applications").insert([
-      {
-        loan_type: loanType,
-        loan_amount: loanAmount,
-        loan_tenure: loanTenure,
-        monthly_income: monthlyIncome,
-        employment_type: employmentType,
-      },
-    ]);
+    const response = await fetch(`${process.env.REACT_APP_API_URL}/api/loans/apply-loan`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        loanType,
+        loanAmount,
+        loanTenure,
+        monthlyIncome,
+        employmentType,
+      }),
+    });
 
+    const data = await response.json();
     setLoading(false);
 
-    if (error) {
-      console.error("Error submitting form:", error.message);
+    if (!response.ok) {
+      console.error("Error submitting form:", data.error);
       alert("Error submitting application. Please try again.");
     } else {
       console.log("Form submitted successfully:", data);
