@@ -37,14 +37,14 @@ const Sidebar = ({ setActiveComponent }) => {
             ⚙️ Settings
           </button>
         </li> */}
-        <li>
+        {/* <li>
           <button
             className="btn btn-dark w-100 text-start"
             onClick={() => setActiveComponent("emi")}
           >
             <MdSchedule /> EMI Schedual
           </button>
-        </li>
+        </li> */}
         <li>
           <button
             className="btn btn-dark w-100 text-start"
