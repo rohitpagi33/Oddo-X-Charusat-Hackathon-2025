@@ -8,6 +8,7 @@ import Messages from "../components/Dashboard/Messages.jsx"; // Example componen
 import EMI_Schedual from "../components/Dashboard/EMI_schedules.jsx"; // Example component
 import Apply_loan from "../components/Dashboard/Apply_loan.jsx"; // Example component
 import { useState } from "react";
+import KYCVerification from "../components/KYC/aadhar_kyc.jsx";
 
 const UserDashboard = () => {
     const [activeComponent, setActiveComponent] = useState("dashboard"); // Default: Dashboard
@@ -21,6 +22,8 @@ const UserDashboard = () => {
         return <Apply_loan />;
       case "cibil":
         return <CIBIL />;
+      case "kyc":
+        return <KYCVerification />;
       case "emi":
         return <EMI_Schedual />;
       case "messages":

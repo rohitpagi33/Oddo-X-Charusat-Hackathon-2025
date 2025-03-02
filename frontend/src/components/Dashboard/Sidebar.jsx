@@ -56,6 +56,14 @@ const Sidebar = ({ setActiveComponent }) => {
         <li>
           <button
             className="btn btn-dark w-100 text-start"
+            onClick={() => setActiveComponent("kyc")}
+          >
+           <RiNumbersFill /> KYC
+          </button>
+        </li>
+        <li>
+          <button
+            className="btn btn-dark w-100 text-start"
             onClick={() => setActiveComponent("messages")}
           >
              <FiMessageSquare />  Notifications 
