@@ -2,6 +2,8 @@
 Oddo X Charusat Hackathon 2025 
 Team : The HackPack
 Team No : 21
+
+#video link: https://drive.google.com/drive/folders/1zDKg1J8DpA6MaZ_YSHY7KpQW_P7vdYpC?usp=sharing
  
 ## Problem Statement
 Many underbanked or low-income communities lack access to essential financial tools and services, leading to limited economic opportunities and financial instability.
