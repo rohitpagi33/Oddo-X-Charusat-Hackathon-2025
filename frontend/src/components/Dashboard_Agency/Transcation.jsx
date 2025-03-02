@@ -1,14 +1,31 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Table, Button, Form } from "react-bootstrap";
+import { createClient } from '@supabase/supabase-js';
+
+const supabaseUrl = process.env.REACT_APP_SUPABASE_URL;
+const supabaseKey = process.env.REACT_APP_SUPABASE_KEY;
+const supabase = createClient(supabaseUrl, supabaseKey);
 
 const Transactions = () => {
-  const transactions = [
-    { id: "TXN001", date: "2024-02-15", borrower: "Rahul Kumar", type: "Disbursement", amount: "₹50,000", status: "Success" },
-    { id: "TXN002", date: "2024-02-15", borrower: "Priya Singh", type: "EMI Payment", amount: "₹5,000", status: "Success" },
-    { id: "TXN003", date: "2024-02-14", borrower: "Amit Patel", type: "EMI Payment", amount: "₹7,500", status: "Pending" },
-    { id: "TXN004", date: "2024-02-14", borrower: "Sneha Gupta", type: "Disbursement", amount: "₹75,000", status: "Success" },
-    { id: "TXN005", date: "2024-02-13", borrower: "Rajesh Sharma", type: "EMI Payment", amount: "₹10,000", status: "Failed" },
-  ];
+  const [transactions, setTransactions] = useState([]);
+  const [searchTerm, setSearchTerm] = useState("");
+  const [filterType, setFilterType] = useState("All Transactions");
+
+  useEffect(() => {
+    const fetchTransactions = async () => {
+      const { data, error } = await supabase
+        .from('transactions')
+        .select('*');
+
+      if (error) {
+        console.error("Error fetching transactions:", error);
+      } else {
+        setTransactions(data);
+      }
+    };
+
+    fetchTransactions();
+  }, []);
 
   const getStatusBadge = (status) => {
     switch (status) {
@@ -27,6 +44,20 @@ const Transactions = () => {
     return type === "Disbursement" ? "badge bg-light text-dark" : "badge bg-dark";
   };
 
+  const handleSearchChange = (e) => {
+    setSearchTerm(e.target.value);
+  };
+
+  const handleFilterChange = (e) => {
+    setFilterType(e.target.value);
+  };
+
+  const filteredTransactions = transactions.filter((txn) => {
+    const matchesSearch = txn.borrower.toLowerCase().includes(searchTerm.toLowerCase()) || txn.id.toLowerCase().includes(searchTerm.toLowerCase());
+    const matchesFilter = filterType === "All Transactions" || txn.type === filterType;
+    return matchesSearch && matchesFilter;
+  });
+
   return (
     <div className="container-md p-5 text-white" style={{ backgroundColor: "#121212", minHeight: "100vh" }}>
       <h1 className="mb-4">Transactions</h1>
@@ -34,9 +65,15 @@ const Transactions = () => {
 
       {/* Search & Filter */}
       <div className="d-flex justify-content-between mb-3">
-        <Form.Control type="text" placeholder="Search transactions..." className="w-50" />
+        <Form.Control
+          type="text"
+          placeholder="Search transactions..."
+          className="w-50"
+          value={searchTerm}
+          onChange={handleSearchChange}
+        />
         <div>
-          <Form.Select className="me-2 d-inline w-auto">
+          <Form.Select className="me-2 d-inline w-auto" value={filterType} onChange={handleFilterChange}>
             <option>All Transactions</option>
             <option>Disbursements</option>
             <option>EMI Payments</option>
@@ -61,7 +98,7 @@ const Transactions = () => {
           </tr>
         </thead>
         <tbody>
-          {transactions.map((txn) => (
+          {filteredTransactions.map((txn) => (
             <tr key={txn.id}>
               <td>{txn.id}</td>
               <td>{txn.date}</td>
