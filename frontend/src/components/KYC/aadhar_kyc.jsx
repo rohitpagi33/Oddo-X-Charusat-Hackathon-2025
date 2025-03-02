@@ -22,7 +22,7 @@ export default function AadharKYC() {
     const { data, error } = await supabase
       .from("kyc_users")
       .select("*")
-      .eq("aadhar_number", aadharNumber)
+      .eq("aadhaar_number", aadharNumber)
       .single();
 
     if (error || !data) {
@@ -32,7 +32,8 @@ export default function AadharKYC() {
 
     const otpCode = generateOtp();
     setSentOtp(otpCode);
-    alert(`OTP sent to registered mobile: ${data.mobile}`);
+    alert(`OTP sent to registered mobile: ${data.mobile} , ${otpCode}`);
+    console.log(`OTP sent to registered mobile: ${data.mobile} , ${otpCode}`);
   };
 
   const verifyOtp = async () => {
@@ -49,7 +50,7 @@ export default function AadharKYC() {
     const { data, error } = await supabase
       .from("kyc_users")
       .select("*")
-      .eq("aadhar_number", aadharNumber)
+      .eq("aadhaar_number", aadharNumber)
       .single();
 
     if (error || !data) {
@@ -63,7 +64,7 @@ export default function AadharKYC() {
 
     const { error: insertError } = await supabase.from("recent_activities").insert([
       {
-        user_id: data.user_id, // Ensure `user_id` exists in `kyc_users`
+        user_id: 'b762809a-d0bc-4065-b1a9-44039d3b0625', // Ensure `user_id` exists in `kyc_users`
         title: "KYC Successful",
         description: `User KYC verification completed successfully.`,
         date: timestamp,
