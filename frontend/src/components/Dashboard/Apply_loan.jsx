@@ -13,52 +13,56 @@ export default function ApplyLoanPage() {
   const [loading, setLoading] = useState(false);
 
   // Handle form submission
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    setLoading(true);
+const handleSubmit = async (e) => {
+  e.preventDefault();
+  setLoading(true);
 
-    // Get user_id from localStorage
-    const userId = localStorage.getItem("userId");
+  // Get user_id from localStorage
+  const userId = localStorage.getItem("userId");
 
-    if (!userId) {
-      alert("User not logged in. Please log in first.");
-      setLoading(false);
-      return;
-    }
-
-    const response = await fetch(`${process.env.REACT_APP_API_URL}/api/loans/apply-loan`, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        userId, // Storing user_id in Supabase
-        loanType,
-        loanAmount,
-        loanTenure,
-        monthlyIncome,
-        employmentType,
-      }),
-    });
-
-    const data = await response.json();
+  if (!userId) {
+    alert("User not logged in. Please log in first.");
     setLoading(false);
+    return;
+  }
 
-    if (!response.ok) {
-      console.error("Error submitting form:", data.error);
-      alert("Error submitting application. Please try again.");
-      window.location.reload();
-    } else {
-      console.log("Form submitted successfully:", data);
-      alert("Application submitted successfully!");
-      window.location.href = "http://localhost:3000/dashboard_user";
-      
-      // Reset form fields after submission
-      setLoanType("");
-      setLoanAmount("");
-      setLoanTenure(24);
-      setMonthlyIncome("");
-      setEmploymentType("");
-    }
+  const payload = {
+    userId, // Storing user_id in Supabase
+    loanType,
+    loanAmount,
+    loanTenure,
+    monthlyIncome,
+    employmentType,
   };
+
+  console.log("Request Payload:", payload);
+
+  const response = await fetch(`${process.env.REACT_APP_API_URL}/api/loans/apply-loan`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(payload),
+  });
+
+  const data = await response.json();
+  setLoading(false);
+
+  if (!response.ok) {
+    console.error("Error submitting form:", data.error);
+    alert("Error submitting application. Please try again.");
+    window.location.reload();
+  } else {
+    console.log("Form submitted successfully:", data);
+    alert("Application submitted successfully!");
+    window.location.href = "http://localhost:3000/dashboard_user";
+    
+    // Reset form fields after submission
+    setLoanType("");
+    setLoanAmount("");
+    setLoanTenure(24);
+    setMonthlyIncome("");
+    setEmploymentType("");
+  }
+};
 
   return (
     <div className="container mt-5">

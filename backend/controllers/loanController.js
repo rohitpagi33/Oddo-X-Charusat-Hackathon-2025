@@ -1,9 +1,9 @@
 import { supabase } from "../config/supabaseClient.js";
 
 export const submitLoanApplication = async (req, res) => {
-  const {userId, loanType, loanAmount, loanTenure, monthlyIncome, employmentType } = req.body;
+  const { userId, loanType, loanAmount, loanTenure, monthlyIncome, employmentType } = req.body;
 
-  if (!userId || loanType || !loanAmount || !loanTenure || !monthlyIncome || !employmentType) {
+  if (!userId || !loanType || !loanAmount || !loanTenure || !monthlyIncome || !employmentType) {
     return res.status(400).json({ error: "All fields are required" });
   }
 
