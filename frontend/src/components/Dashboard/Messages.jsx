@@ -1,28 +1,46 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Card, CardBody } from "react-bootstrap";
+import { createClient } from "@supabase/supabase-js";
 
-const notifications = [
-  { id: 1, message: "Your EMI payment of ₹12,500 is due tomorrow.", status: "unread", timestamp: "Just now" },
-  { id: 2, message: "Loan approved! Check your dashboard for details.", status: "read", timestamp: "1 hour ago" },
-  { id: 3, message: "CIBIL score updated: 750.", status: "read", timestamp: "Yesterday" },
-  { id: 4, message: "New offer: Get lower interest rates on personal loans!", status: "unread", timestamp: "2 days ago" },
-];
+import { supabase } from "../../supabaseClient";
 
 export default function NotificationsPage() {
+  const [notifications, setNotifications] = useState([]);
+
+  useEffect(() => {
+    async function fetchNotifications() {
+      const { data, error } = await supabase.from("notifications").select("*").order("timestamp", { ascending: false });
+
+      if (error) {
+        console.error("Error fetching notifications:", error);
+      } else {
+        setNotifications(data);
+      }
+    }
+
+    fetchNotifications();
+  }, []);
+
   return (
     <div className="container mt-4">
       <h1 className="mb-4">Notifications</h1>
       <div className="row">
-        {notifications.map((notification) => (
-          <div key={notification.id} className="col-md-6 mb-3">
-            <Card className={notification.status === "unread" ? "border-primary" : ""}>
-              <CardBody>
-                <p className="mb-1">{notification.message}</p>
-                <small className="text-muted">{notification.timestamp}</small>
-              </CardBody>
-            </Card>
-          </div>
-        ))}
+        {notifications.length > 0 ? (
+          notifications.map((notification) => (
+            <div key={notification.id} className="col-md-6 mb-3">
+              <Card className={notification.status === "unread" ? "border-primary" : ""}>
+                <CardBody>
+                  <p className="mb-1">{notification.message}</p>
+                  <small className="text-muted">
+                    {new Date(notification.timestamp).toLocaleString()}
+                  </small>
+                </CardBody>
+              </Card>
+            </div>
+          ))
+        ) : (
+          <p>No notifications available.</p>
+        )}
       </div>
     </div>
   );

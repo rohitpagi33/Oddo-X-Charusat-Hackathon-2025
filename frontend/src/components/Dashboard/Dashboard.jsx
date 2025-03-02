@@ -59,7 +59,7 @@ export default function DashboardPage() {
       data.map((activity) => ({
         title: activity.title,
         description: activity.description,
-        date: `${new Date(activity.date).toLocaleDateString()} ${activity.time}`,
+        date: `${new Date(activity.date).toLocaleDateString()} `,
       }))
     );
   }
